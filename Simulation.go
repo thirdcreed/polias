@@ -46,7 +46,13 @@ func LoadModel(config io.Reader) Simulation {
 		panic(fmt.Errorf("fatal error marshaling %s ", err))
 	}
 
-	fmt.Println(cfg)
+	aTable := make([][]float64, len(cfg.SG))
+
+	for i, socialGroup := range cfg.SG {
+		aTable[i] = socialGroup.Attitudes
+	}
+
+	fmt.Println(aTable)
 
 	return Simulation{}
 }
