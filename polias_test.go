@@ -1,15 +1,33 @@
 package polias
 
-import "testing"
+import (
+	"bytes"
+	"testing"
+)
 
 func TestRun(*testing.T) {
-	i := MakeIndividual()
-	i2 := MakeIndividual()
-	s := []SocialGroup{SocialGroup{Name: 2}}
-	aTable := [][]int{{1, 2, 3}, {2, 3, 4}, {3, 4, 5}}
-	i.Contacts = []Individual{i2}
-	i2.Contacts = []Individual{i}
-	go i2.listen(i.Broadcast)
-	individuals := []Individual{i, i2}
-	Run(Simulation{"test", s, aTable, individuals})
+
+	var model = []byte(`
+SG:
+  - Name: "Democrats"
+    Attitudes:
+      - 0
+      - 0.5
+      - 0.3
+  - Name: "Republicans"
+    Attitudes:
+      - 0
+      - 0.5
+      - 0.3
+  - Name: "Independents"
+    Attitudes:
+      - 0
+      - 0.5
+      - 0.3
+alpha: .5
+epsilon: .3`)
+
+	LoadModel(bytes.NewBuffer(model))
+
+	//Run(Simulation{"test", s, aTable, individuals})
 }
